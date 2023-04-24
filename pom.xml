@@ -11,4 +11,27 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <exec.mainClass>br.com.bene20.vendas.Vendas</exec.mainClass>
     </properties>
+    
+    <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.4.RELEASE</version>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+    </dependencies>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>
