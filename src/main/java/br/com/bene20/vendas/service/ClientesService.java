@@ -2,7 +2,6 @@ package br.com.bene20.vendas.service;
 
 import br.com.bene20.vendas.model.Cliente;
 import br.com.bene20.vendas.repository.ClientesRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,7 +15,6 @@ public class ClientesService {
 
     public void salvarCliente(Cliente cliente){
         validarCliente(cliente);
-        clientesRepository.persistir(cliente);
     }
     
     public void validarCliente(Cliente cliente){
