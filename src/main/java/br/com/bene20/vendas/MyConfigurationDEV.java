@@ -1,12 +1,10 @@
 package br.com.bene20.vendas;
 
+import br.com.bene20.vendas.annotations.Development;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 
-@Configuration
-@Profile("development") //Este Configuration só será ativado quando a propriedade 'spring.profiles.active' for igual a 'development'
+@Development
 public class MyConfigurationDEV {
     
     @Bean
