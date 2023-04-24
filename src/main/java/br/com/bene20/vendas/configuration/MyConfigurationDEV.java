@@ -1,4 +1,4 @@
-package br.com.bene20.vendas;
+package br.com.bene20.vendas.configuration;
 
 import br.com.bene20.vendas.annotations.Development;
 import org.springframework.boot.CommandLineRunner;

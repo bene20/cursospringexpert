@@ -1,4 +1,4 @@
-package br.com.bene20.vendas;
+package br.com.bene20.vendas.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
