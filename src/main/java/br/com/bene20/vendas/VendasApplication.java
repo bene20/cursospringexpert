@@ -15,30 +15,32 @@ public class VendasApplication {
     @Bean
     public CommandLineRunner init(@Autowired Clientes clientes){
         return args -> {
-            clientes.salvar(new Cliente("Pedro"));
-            clientes.salvar(new Cliente("Ana"));
-            clientes.salvar(new Cliente("Caio"));
+            clientes.save(new Cliente("Pedro"));
+            clientes.save(new Cliente("Ana"));
+            clientes.save(new Cliente("Caio"));
+            
+            System.out.println("0 - Existe um Pietro na base? " + clientes.existsByNome("Pietro"));
             
             System.out.println("1 - Relação de todos os nomes:");
-            clientes.obterTodos().forEach(System.out::println );
+            clientes.findAll().forEach(System.out::println );
             
             System.out.println("2 - Alterando todos os nomes:");
-            clientes.obterTodos().forEach(c -> {
+            clientes.findAll().forEach(c -> {
                 c.setNome(c.getNome() + " atualizado");
-                clientes.atualizar(c);
+                clientes.save(c);
             });
-            clientes.obterTodos().forEach(System.out::println);
+            clientes.findAll().forEach(System.out::println);
             
             System.out.println("3 - Pequisando cliente %na%:");
-            clientes.buscarPorNome("na").forEach(System.out::println );
+            clientes.findByNomeLike("%na%").forEach(System.out::println );
 
             System.out.println("4 - Excluindo os clientes:");
-            clientes.obterTodos().forEach(c -> {
-                clientes.deletar(c);
+            clientes.findAll().forEach(c -> {
+                clientes.delete(c);
             });
 
             System.out.println("5 - Listagem final dos clientes:");
-            clientes.obterTodos().forEach(System.out::println);;
+            clientes.findAll().forEach(System.out::println);;
         };
     }
     
