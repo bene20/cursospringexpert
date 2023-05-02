@@ -31,8 +31,11 @@ public class VendasApplication {
             });
             clientes.findAll().forEach(System.out::println);
             
-            System.out.println("3 - Pequisando cliente %na%:");
+            System.out.println("3a - Pequisando cliente %na%:");
             clientes.findByNomeLike("%na%").forEach(System.out::println );
+
+            System.out.println("3b - Pequisando cliente %na%:");
+            clientes.encontrarPorNome("%na%").forEach(System.out::println );
 
             System.out.println("4 - Excluindo os clientes:");
             clientes.findAll().forEach(c -> {
