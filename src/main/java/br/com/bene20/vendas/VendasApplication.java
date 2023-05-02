@@ -32,10 +32,10 @@ public class VendasApplication {
             System.out.println("3 - Pequisando cliente %na%:");
             clientes.buscarPorNome("na").forEach(System.out::println );
 
-//            System.out.println("4 - Excluindo os clientes:");
-//            clientes.obterTodos().forEach(c -> {
-//                clientes.deletar(c);
-//            });
+            System.out.println("4 - Excluindo os clientes:");
+            clientes.obterTodos().forEach(c -> {
+                clientes.deletar(c);
+            });
 
             System.out.println("5 - Listagem final dos clientes:");
             clientes.obterTodos().forEach(System.out::println);;

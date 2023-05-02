@@ -4,52 +4,57 @@ import br.com.bene20.vendas.domain.entity.Cliente;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class Clientes {
     
-    private static String INSERT = "insert into cliente(nome) values (?) ";
-    private static String SELECT_ALL = "select * from cliente ";
-    private static String UPDATE = "update cliente set nome = ? where id = ? ";
-    private static String DELETE = "delete from cliente where id = ? ";
-    
     @Autowired
-    JdbcTemplate jdbcTemplate;
+    private EntityManager em;
     
+    @Transactional
     public Cliente salvar(Cliente cliente){
-        jdbcTemplate.update(INSERT, 
-                                new Object[]{cliente.getNome()});
+        em.persist(cliente);
         return cliente;
     }
     
+    @Transactional
     public Cliente atualizar(Cliente cliente){
-        jdbcTemplate.update(UPDATE, 
-                                new Object[]{cliente.getNome(), 
-                                             cliente.getId()});
+        em.merge(cliente);
         return cliente;
     }
     
-    
+    @Transactional
     public void deletar(Cliente cliente){
-        deletar(cliente.getId());
+        if(!em.contains(cliente)){
+            cliente = em.merge(cliente);
+        }
+        em.remove(cliente);
     }
     
+    @Transactional
     public void deletar(Integer id){
-        jdbcTemplate.update(DELETE, new Object[]{id});
+        Cliente cliente = em.find(Cliente.class, id);
+        deletar(cliente);
     }
     
+    @Transactional
     public List<Cliente> buscarPorNome(String nome){
-        return jdbcTemplate.query(SELECT_ALL.concat("where nome like ?"),
-                                      new Object[]{"%"+nome+"%"},
-                                  obterClienteMapper());
+        return em
+          .createQuery("select c from Cliente c where c.nome like :nome", 
+                       Cliente.class)
+          .setParameter("nome", "%"+nome+"%")
+          .getResultList();
     }
     
     public List<Cliente> obterTodos(){
-        return jdbcTemplate.query(SELECT_ALL, obterClienteMapper());
+        return em.createQuery("select c from Cliente c", 
+                              Cliente.class)
+                 .getResultList();
     }
 
     private RowMapper<Cliente> obterClienteMapper() {
