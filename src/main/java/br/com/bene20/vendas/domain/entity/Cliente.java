@@ -22,6 +22,9 @@ public class Cliente implements Serializable{
     
     @Column(name = "nome", length = 100)
     private String nome;
+    
+    @Column(name = "cpf", length = 11)
+    private String cpf;
 
     @JsonIgnore //Anotação para não incluir esta proprieade no Json gerado para a API
     @OneToMany(mappedBy = "cliente")
@@ -55,6 +58,14 @@ public class Cliente implements Serializable{
         this.nome = nome;
     }
 
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
     public List<Pedido> getPedidos() {
         return pedidos;
     }
@@ -65,6 +76,6 @@ public class Cliente implements Serializable{
 
     @Override
     public String toString() {
-        return "Cliente{" + "id=" + id + ", nome=" + nome + '}';
+        return "Cliente{" + "id=" + id + ", nome=" + nome + ", cpf=" + cpf + '}';
     }
  }

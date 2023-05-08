@@ -2,7 +2,10 @@ package br.com.bene20.vendas.api.controller;
 
 import br.com.bene20.vendas.domain.entity.Cliente;
 import br.com.bene20.vendas.domain.repository.ClienteRepository;
+import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -70,5 +73,18 @@ public class ClienteController {
         } else {
             return ResponseEntity.notFound().build();
         }        
+    }
+    
+    @GetMapping
+    public ResponseEntity find(Cliente filtro){
+        ExampleMatcher matcher = ExampleMatcher
+                .matching()
+                .withIgnoreCase()
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+        Example example = Example.of(filtro, matcher);
+        
+        List<Cliente> lista = clienteRepository.findAll(example);
+        
+        return ResponseEntity.ok(lista);
     }
 }
