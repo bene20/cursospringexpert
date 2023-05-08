@@ -1,4 +1,4 @@
-package br.com.bene20.vendas.domain.repositorio;
+package br.com.bene20.vendas.domain.repository;
 
 import br.com.bene20.vendas.domain.entity.Cliente;
 import java.util.List;
@@ -20,5 +20,8 @@ public interface Clientes extends JpaRepository<Cliente, Integer>{
     public void deleteByNome(@Param("nome") String nome);
 
     public boolean existsByNome(String pedro);
+    
+    @Query("SELECT c FROM Cliente c LEFT JOIN FETCH c.pedidos where c.id = :id")
+    public Cliente findClienteFetchPedidos(@Param("id") Integer Id);
     
 }
