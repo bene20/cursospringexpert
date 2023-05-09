@@ -14,6 +14,7 @@ import br.com.bene20.vendas.exception.RegraNegocioException;
 import br.com.bene20.vendas.service.PedidoService;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -69,5 +70,10 @@ public class PedidoServiceImpl implements PedidoService{
                     return entidade;
                 })
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<Pedido> obterPedidoCompleto(Integer id) {
+        return pedidoRepository.findByIdFetchItens(id);
     }
 }
