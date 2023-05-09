@@ -1,17 +1,13 @@
 package br.com.bene20.vendas.api.dto;
 
-/**
- * {
- *   "cliente": 1,
- *   "total": 100,
- *   "itens": [
- *     {
- *       "produto": 1,
- *       "quantidade": 10
- *     }
- *   ]
- * }
- */
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ItemPedidoDTO {
     
     private Integer produto;

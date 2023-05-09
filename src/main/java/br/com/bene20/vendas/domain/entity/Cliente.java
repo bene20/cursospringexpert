@@ -10,7 +10,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "cliente")
 public class Cliente implements Serializable{
@@ -26,56 +33,8 @@ public class Cliente implements Serializable{
     @Column(name = "cpf", length = 11)
     private String cpf;
 
+    @ToString.Exclude
     @JsonIgnore //Anotação para não incluir esta proprieade no Json gerado para a API
     @OneToMany(mappedBy = "cliente")
     private List<Pedido> pedidos;
-    
-    public Cliente() {
-    }
-
-    public Cliente(String nome) {
-        this.nome = nome;
-    }
-
-    public Cliente(Integer id, String nome) {
-        this.id = id;
-        this.nome = nome;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public List<Pedido> getPedidos() {
-        return pedidos;
-    }
-
-    public void setPedidos(List<Pedido> pedidos) {
-        this.pedidos = pedidos;
-    }
-
-    @Override
-    public String toString() {
-        return "Cliente{" + "id=" + id + ", nome=" + nome + ", cpf=" + cpf + '}';
-    }
  }
