@@ -1,7 +1,7 @@
 package br.com.bene20.vendas.api.controller;
 
-import br.com.bene20.vendas.domain.entity.Cliente;
-import br.com.bene20.vendas.domain.repository.ClienteRepository;
+import br.com.bene20.vendas.domain.entity.Produto;
+import br.com.bene20.vendas.domain.repository.ProdutoRepository;
 import java.util.List;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -18,17 +18,17 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
-@RequestMapping("/api/cliente")
-public class ClienteController {
+@RequestMapping("/api/produto")
+public class ProdutoController {
     
-    private ClienteRepository repository;
+    private ProdutoRepository repository;
 
-    public ClienteController(ClienteRepository repository) {
+    public ProdutoController(ProdutoRepository repository) {
         this.repository = repository;
     }
 
     @GetMapping("{id}")
-    public Cliente getById(@PathVariable("id") Integer id){
+    public Produto getById(@PathVariable("id") Integer id){
         return repository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -37,7 +37,7 @@ public class ClienteController {
     
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Cliente save(@RequestBody Cliente registro){
+    public Produto save(@RequestBody Produto registro){
         registro.setId(null);
         
         return repository.save(registro);
@@ -46,7 +46,7 @@ public class ClienteController {
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable("id") Integer id,
-                       @RequestBody Cliente registro){
+                       @RequestBody Produto registro){
         repository
                 .findById(id)
                 .map(registroExistente -> {
@@ -72,7 +72,7 @@ public class ClienteController {
     }
     
     @GetMapping
-    public List<Cliente> find(Cliente filtro){
+    public List<Produto> find(Produto filtro){
         ExampleMatcher matcher = ExampleMatcher
                 .matching()
                 .withIgnoreCase()
