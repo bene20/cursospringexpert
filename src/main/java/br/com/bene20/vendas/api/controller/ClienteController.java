@@ -52,7 +52,7 @@ public class ClienteController {
                 .map(registroExistente -> {
                     registro.setId(registroExistente.getId());
                     repository.save(registro);
-                    return Void.class;
+                    return registro;
                 })
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                                                                "Registro não encontrado"));
