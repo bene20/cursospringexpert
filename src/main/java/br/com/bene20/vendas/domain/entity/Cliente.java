@@ -10,10 +10,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.validator.constraints.br.CPF;
 
 @Data
 @NoArgsConstructor
@@ -27,9 +29,12 @@ public class Cliente implements Serializable{
     @Column(name = "id")
     private Integer id;
     
+    @NotEmpty(message = "O campo 'Nome' de cliente é obrigatório.")
     @Column(name = "nome", length = 100)
     private String nome;
     
+    @NotEmpty(message = "O campo 'CPF' de cliente é obrigatório.")
+    @CPF(message = "O CPF  de cliente informado é inválido")
     @Column(name = "cpf", length = 11)
     private String cpf;
 

@@ -3,6 +3,7 @@ package br.com.bene20.vendas.api.controller;
 import br.com.bene20.vendas.domain.entity.Cliente;
 import br.com.bene20.vendas.domain.repository.ClienteRepository;
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
@@ -37,7 +38,7 @@ public class ClienteController {
     
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Cliente save(@RequestBody Cliente registro){
+    public Cliente save(@RequestBody @Valid Cliente registro){
         registro.setId(null);
         
         return repository.save(registro);
@@ -46,7 +47,7 @@ public class ClienteController {
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable("id") Integer id,
-                       @RequestBody Cliente registro){
+                       @RequestBody @Valid Cliente registro){
         repository
                 .findById(id)
                 .map(registroExistente -> {
