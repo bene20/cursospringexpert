@@ -1,11 +1,13 @@
 package br.com.bene20.vendas.service.impl;
 
+import br.com.bene20.vendas.exception.PedidoNaoEncontradoException;
 import br.com.bene20.vendas.api.dto.ItemPedidoDTO;
 import br.com.bene20.vendas.api.dto.PedidoDTO;
 import br.com.bene20.vendas.domain.entity.Cliente;
 import br.com.bene20.vendas.domain.entity.ItemPedido;
 import br.com.bene20.vendas.domain.entity.Pedido;
 import br.com.bene20.vendas.domain.entity.Produto;
+import br.com.bene20.vendas.domain.enums.StatusPedido;
 import br.com.bene20.vendas.domain.repository.ClienteRepository;
 import br.com.bene20.vendas.domain.repository.ItemPedidoRepository;
 import br.com.bene20.vendas.domain.repository.PedidoRepository;
@@ -40,6 +42,7 @@ public class PedidoServiceImpl implements PedidoService{
         pedido.setTotal(dto.getTotal());
         pedido.setDataPedido(LocalDate.now());
         pedido.setCliente(cliente);
+        pedido.setStatus(StatusPedido.REALIZADO);
         
         pedidoRepository.save(pedido);
         
@@ -50,6 +53,19 @@ public class PedidoServiceImpl implements PedidoService{
         return pedido;
     }
 
+    @Override
+    @Transactional
+    public void atualizaStatus(Integer id, StatusPedido status) {
+        pedidoRepository
+                .findById(id)
+                .map(pedido -> {
+                    pedido.setStatus(status);
+                    pedidoRepository.save(pedido);
+                    return Void.class;
+                })
+                .orElseThrow(() -> new PedidoNaoEncontradoException("Pedido "+id+" não encontrado."));
+    }
+    
     private List<ItemPedido> converterItensPedido(Pedido pedido,
                                                   List<ItemPedidoDTO> itensPedidoDTO){
         if((itensPedidoDTO == null) || (itensPedidoDTO.isEmpty())){
@@ -76,4 +92,5 @@ public class PedidoServiceImpl implements PedidoService{
     public Optional<Pedido> obterPedidoCompleto(Integer id) {
         return pedidoRepository.findByIdFetchItens(id);
     }
+
 }

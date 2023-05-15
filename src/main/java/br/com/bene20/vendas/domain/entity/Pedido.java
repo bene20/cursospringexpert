@@ -1,10 +1,13 @@
 package br.com.bene20.vendas.domain.entity;
 
+import br.com.bene20.vendas.domain.enums.StatusPedido;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -43,4 +46,8 @@ public class Pedido {
     @ToString.Exclude
     @OneToMany(mappedBy = "pedido")
     private List<ItemPedido> itens;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private StatusPedido status;
 }

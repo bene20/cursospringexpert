@@ -1,6 +1,5 @@
 package br.com.bene20.vendas.api.dto;
 
-import br.com.bene20.vendas.api.controller.PedidoController;
 import br.com.bene20.vendas.domain.entity.Pedido;
 import java.math.BigDecimal;
 import java.time.format.DateTimeFormatter;
@@ -27,6 +26,8 @@ public class InformacoesPedidoDTO {
     
     private String dataPedido;
     
+    private String status;
+    
     @ToString.Exclude
     private List<InformacoesItemPedidoDTO> itens;
     
@@ -38,6 +39,7 @@ public class InformacoesPedidoDTO {
                 .cpf(pedido.getCliente().getCpf())
                 .nomeCliente(pedido.getCliente().getNome())
                 .total(pedido.getTotal())
+                .status(pedido.getStatus().name())
                 .itens( InformacoesItemPedidoDTO.fromItemPedidoEntityList(pedido.getItens()))
                 .build();
     }    
