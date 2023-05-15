@@ -1,5 +1,6 @@
 package br.com.bene20.vendas.api.dto;
 
+import br.com.bene20.vendas.validation.NotEmptyList;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.validation.constraints.NotNull;
@@ -20,5 +21,6 @@ public class PedidoDTO {
     private BigDecimal total;
     
     @ToString.Exclude
+    @NotEmptyList(message = "A lista de itens do pedido não pode estar vazia.")
     private List<ItemPedidoDTO> itens;
 }
