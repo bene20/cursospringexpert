@@ -14,13 +14,13 @@ import lombok.ToString;
 @AllArgsConstructor
 public class PedidoDTO {
     
-    @NotNull(message = "O campo 'cliente' do pedido é obrigatório.")
+    @NotNull(message = "{campo.codigo-cliente.obrigatorio}")
     private Integer cliente;
     
-    @NotNull(message = "O campo 'total' do pedido é obrigatório.")
+    @NotNull(message = "{campo.total-pedido.obrigatorio}")
     private BigDecimal total;
     
     @ToString.Exclude
-    @NotEmptyList(message = "A lista de itens do pedido não pode estar vazia.")
+    @NotEmptyList(message = "{campo.itens-pedido.obrigatorio}")
     private List<ItemPedidoDTO> itens;
 }

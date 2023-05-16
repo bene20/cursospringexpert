@@ -38,14 +38,14 @@ public class Pedido {
     @NotEmpty(message = "{campo.codigo-cliente.obrigatorio}")
     @ToString.Exclude
     @ManyToOne
-    @JoinColumn(name = "cliente_id")
+    @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
     
-    @Column(name = "data_pedido")
+    @Column(name = "data_pedido", nullable = false)
     private LocalDate dataPedido;
     
     @NotNull(message = "{campo.total-pedido.obrigatorio}")
-    @Column(name = "total", scale = 2, precision = 20)
+    @Column(name = "total", scale = 2, precision = 20, nullable = false)
     private BigDecimal total;
 
     @NotEmptyList(message = "{campo.itens-pedido.obrigatorio}")
@@ -54,6 +54,6 @@ public class Pedido {
     private List<ItemPedido> itens;
     
     @Enumerated(EnumType.STRING)
-    @Column(name = "status")
+    @Column(name = "status", nullable = false)
     private StatusPedido status;
 }

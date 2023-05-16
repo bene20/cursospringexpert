@@ -30,12 +30,12 @@ public class Cliente implements Serializable{
     private Integer id;
     
     @NotEmpty(message = "{campo.nome.obrigatorio}")
-    @Column(name = "nome", length = 100)
+    @Column(name = "nome", length = 100, nullable = false)
     private String nome;
     
     @NotEmpty(message = "{campo.cpf.obrigatorio}")
     @CPF(message = "{campo.cpf.invalido}")
-    @Column(name = "cpf", length = 11)
+    @Column(name = "cpf", length = 11, nullable = false)
     private String cpf;
 
     @ToString.Exclude
