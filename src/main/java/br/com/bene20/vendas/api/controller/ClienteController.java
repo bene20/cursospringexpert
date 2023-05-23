@@ -4,6 +4,7 @@ import br.com.bene20.vendas.domain.entity.Cliente;
 import br.com.bene20.vendas.domain.repository.ClienteRepository;
 import java.util.List;
 import javax.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
@@ -20,13 +21,10 @@ import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/cliente")
+@RequiredArgsConstructor
 public class ClienteController {
     
-    private ClienteRepository repository;
-
-    public ClienteController(ClienteRepository repository) {
-        this.repository = repository;
-    }
+    private final ClienteRepository repository;
 
     @GetMapping("{id}")
     public Cliente getById(@PathVariable("id") Integer id){

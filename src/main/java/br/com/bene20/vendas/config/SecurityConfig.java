@@ -1,7 +1,9 @@
 package br.com.bene20.vendas.config;
 
-import javafx.beans.binding.Bindings;
+import br.com.bene20.vendas.service.impl.UsuarioServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -12,6 +14,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
+  @Autowired
+  private UsuarioServiceImpl usuarioService;
+  
   @Bean
   public PasswordEncoder passwordEncoder(){
     return new BCryptPasswordEncoder();
@@ -25,11 +30,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     auth
-      .inMemoryAuthentication()
-      .passwordEncoder(passwordEncoder())
-      .withUser("bene20")
-      .password(passwordEncoder().encode("bene20"))
-      .roles("USER", "ADMIN");
+      .userDetailsService(usuarioService)
+      .passwordEncoder(passwordEncoder());
   }
   
   /***
@@ -45,6 +47,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         .antMatchers("/api/cliente/**").hasAnyRole("USER", "ADMIN")
         .antMatchers("/api/produto/**").hasRole("ADMIN")
         .antMatchers("/api/pedido/**").hasAnyRole("USER", "ADMIN")
+        .antMatchers(HttpMethod.POST, "/api/usuario/**").permitAll()
+        .anyRequest().authenticated() //Requerer autenticação para as demais URLs
       .and()
         .httpBasic();
   }
