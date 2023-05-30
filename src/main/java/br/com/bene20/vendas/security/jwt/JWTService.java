@@ -1,4 +1,4 @@
-package br.com.bene20.vendas.service;
+package br.com.bene20.vendas.security.jwt;
 
 import br.com.bene20.vendas.VendasApplication;
 import br.com.bene20.vendas.domain.entity.Usuario;
