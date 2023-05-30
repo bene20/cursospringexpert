@@ -16,6 +16,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Service;
 
+
+/***
+ * Classe responsável por fazer a codificação e decodificação do Token
+ * @author ebenezer.botelho
+ */
 @Service
 public class JWTService {
   
