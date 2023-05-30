@@ -56,7 +56,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
   protected void configure(HttpSecurity http) throws Exception {
     http
       .csrf().disable()
+      .headers().frameOptions().disable()
+      .and()
       .authorizeRequests()
+        .antMatchers("/**").permitAll()
+        .antMatchers("/h2-console/**").permitAll()
         .antMatchers("/api/cliente/**").hasAnyRole("USER", "ADMIN")
         .antMatchers("/api/produto/**").hasRole("ADMIN")
         .antMatchers("/api/pedido/**").hasAnyRole("USER", "ADMIN")
