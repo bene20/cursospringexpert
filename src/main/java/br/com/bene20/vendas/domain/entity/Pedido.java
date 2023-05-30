@@ -35,7 +35,7 @@ public class Pedido {
     @Column(name = "id")
     private Integer id;
     
-    @NotEmpty(message = "{campo.codigo-cliente.obrigatorio}")
+    @NotNull(message = "{campo.codigo-cliente.obrigatorio}")
     @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = false)
