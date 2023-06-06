@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.OncePerRequestFilter;
+import springfox.documentation.service.ApiKey;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
@@ -59,6 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
       .headers().frameOptions().disable()
       .and()
         .authorizeRequests()
+//          .antMatchers("/**").permitAll()
           .antMatchers("/h2-console/**").permitAll()
           .antMatchers("/api/cliente/**").hasAnyRole("USER", "ADMIN")
           .antMatchers("/api/produto/**").hasRole("ADMIN")
@@ -73,5 +76,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     ;
   }
 
-  
+  @Override
+  public void configure(WebSecurity web) throws Exception {
+    //Ignorando os recursos carregados pelo swagger no mecanismo de autenticação do Spring security
+    web
+      .ignoring()
+      .antMatchers(
+              "/v2/api-docs",
+              "/configuration/ui",
+              "/swagger-resources/**",
+              "/configuration/security",
+              "/swagger-ui.html",
+              "/webjars/**");
+            
+  }
 }
