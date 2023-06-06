@@ -2,6 +2,11 @@ package br.com.bene20.vendas.api.controller;
 
 import br.com.bene20.vendas.domain.entity.Cliente;
 import br.com.bene20.vendas.domain.repository.ClienteRepository;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,12 +27,18 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @RequestMapping("/api/cliente")
 @RequiredArgsConstructor
+@Api("Api Clientes")
 public class ClienteController {
     
     private final ClienteRepository repository;
 
     @GetMapping("{id}")
-    public Cliente getById(@PathVariable("id") Integer id){
+    @ApiOperation("Obter detalhes de um cliente")
+    @ApiResponses({
+      @ApiResponse(code = 200, message = "Cliente encontrado"),
+      @ApiResponse(code = 404, message = "Cliente não encontrado para o id informado")
+    })
+    public Cliente getById(@PathVariable("id") @ApiParam("ID do cliente") Integer id){
         return repository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -36,6 +47,11 @@ public class ClienteController {
     
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation("Salva um novo cliente")
+    @ApiResponses({
+      @ApiResponse(code = 201, message = "Cliente salvo com sucesso"),
+      @ApiResponse(code = 400, message = "Erro de validação")
+    })
     public Cliente save(@RequestBody @Valid Cliente registro){
         registro.setId(null);
         
