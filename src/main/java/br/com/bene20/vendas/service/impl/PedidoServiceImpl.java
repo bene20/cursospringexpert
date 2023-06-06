@@ -44,11 +44,11 @@ public class PedidoServiceImpl implements PedidoService{
         pedido.setCliente(cliente);
         pedido.setStatus(StatusPedido.REALIZADO);
         
-        pedidoRepository.save(pedido);
-        
         List<ItemPedido> itensPedido = converterItensPedido(pedido, dto.getItens());
-        itemPedidoRepository.saveAll(itensPedido);
         pedido.setItens(itensPedido);
+        
+        pedidoRepository.save(pedido);
+        itemPedidoRepository.saveAll(itensPedido);
         
         return pedido;
     }

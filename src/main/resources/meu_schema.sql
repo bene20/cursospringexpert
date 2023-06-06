@@ -1,8 +1,20 @@
+create database vendas;
+
+use vendas;
+
 create table cliente(
   id integer primary key auto_increment,
-  nome varchar(100),
+  nome varchar(100) not null,
   cpf varchar(11)
 );
+
+create table usuario(
+  id integer primary key auto_increment,
+  login varchar(100) not null,
+  senha varchar(300) not null,
+  admin bool default false
+);
+
 
 create table produto(
   id integer primary key auto_increment,
