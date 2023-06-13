@@ -1,10 +1,12 @@
 package br.com.bene20.localizacao.service;
 
+import br.com.bene20.localizacao.domain.entity.Cidade;
 import br.com.bene20.localizacao.domain.repository.CidadeRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -34,5 +36,13 @@ public class CidadeService {
 //    cidadeRepository.findByHabitantesLessThanEqual(235L).forEach(System.out::println);
 //    cidadeRepository.findByHabitantesGreaterThan(2000L).forEach(System.out::println);
     cidadeRepository.findByHabitantesLessThanAndNomeLike(555555L, "%a%").forEach(System.out::println);
-  }  
+  }
+
+  public List<Cidade> filtroDinamico(Cidade cidade){
+    ExampleMatcher matcher = ExampleMatcher.matching()
+              .withIgnoreCase()
+              .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+    Example<Cidade> example = Example.of(cidade, matcher);
+    return cidadeRepository.findAll(example);
+  }
 }
