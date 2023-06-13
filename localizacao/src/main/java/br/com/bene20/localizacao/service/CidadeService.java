@@ -2,6 +2,9 @@ package br.com.bene20.localizacao.service;
 
 import br.com.bene20.localizacao.domain.repository.CidadeRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -11,18 +14,18 @@ public class CidadeService {
   private final CidadeRepository cidadeRepository;
 
   public void listarCidades(){
-    cidadeRepository
-            .findAll()
-            .forEach(System.out::println);
+    cidadeRepository.findAll().forEach(System.out::println);
   }
   
   public void listarCidadesPorNome(){
-    cidadeRepository.findByNome("Porto Velho").forEach(System.out::println);
-    cidadeRepository.findByNomeLike("%al%").forEach(System.out::println);
-    cidadeRepository.findByNomeLikeInsensitive("%port%").forEach(System.out::println);
-    cidadeRepository.findByNomeStartingWith("Rio").forEach(System.out::println);
-    cidadeRepository.findByNomeEndingWith("Paulo").forEach(System.out::println);
-    cidadeRepository.findByNomeContaining("Porto").forEach(System.out::println);
+//    cidadeRepository.findByNome("Porto Velho").forEach(System.out::println);
+//    cidadeRepository.findByNomeLike("%al%").forEach(System.out::println);
+//    cidadeRepository.findByNomeLike("%a%", Sort.by("habitantes")).forEach(System.out::println);
+    cidadeRepository.findByNomeLike("%al%", PageRequest.of(1, 2)).forEach(System.out::println);
+//    cidadeRepository.findByNomeLikeInsensitive("%port%").forEach(System.out::println);
+//    cidadeRepository.findByNomeStartingWith("Rio").forEach(System.out::println);
+//    cidadeRepository.findByNomeEndingWith("Paulo").forEach(System.out::println);
+//    cidadeRepository.findByNomeContaining("Porto").forEach(System.out::println);
   }
   
   public void listarCidadesPorHabitantes(){
