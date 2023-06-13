@@ -17,7 +17,7 @@ public class LocalizacaoApplication implements CommandLineRunner {
   @Override
   public void run(String... args) throws Exception {
     System.out.println("Inicializado!");
-    listarCidadesPorNome();
+    listarCidadesPorHabitantes();
   }
   
   void listarCidades(){
@@ -27,18 +27,20 @@ public class LocalizacaoApplication implements CommandLineRunner {
   }
   
   void listarCidadesPorNome(){
-//    cidadeRepository.findByNome("Porto Velho").forEach(System.out::println);
-//    cidadeRepository.findByNomeLike("%al%").forEach(System.out::println);
+    cidadeRepository.findByNome("Porto Velho").forEach(System.out::println);
+    cidadeRepository.findByNomeLike("%al%").forEach(System.out::println);
     cidadeRepository.findByNomeLikeInsensitive("%port%").forEach(System.out::println);
-//    cidadeRepository.findByNomeStartingWith("Rio").forEach(System.out::println);
-//    cidadeRepository.findByNomeEndingWith("Paulo").forEach(System.out::println);
-//    cidadeRepository.findByNomeContaining("Porto").forEach(System.out::println);
+    cidadeRepository.findByNomeStartingWith("Rio").forEach(System.out::println);
+    cidadeRepository.findByNomeEndingWith("Paulo").forEach(System.out::println);
+    cidadeRepository.findByNomeContaining("Porto").forEach(System.out::println);
   }
   
   void listarCidadesPorHabitantes(){
-    cidadeRepository
-            .findByHabitantes(111111L)
-            .forEach(System.out::println);
+//    cidadeRepository.findByHabitantes(111111L).forEach(System.out::println);
+//    cidadeRepository.findByHabitantesLessThan(236L).forEach(System.out::println);
+//    cidadeRepository.findByHabitantesLessThanEqual(235L).forEach(System.out::println);
+//    cidadeRepository.findByHabitantesGreaterThan(2000L).forEach(System.out::println);
+    cidadeRepository.findByHabitantesLessThanAndNomeLike(555555L, "%a%").forEach(System.out::println);
   }
 
   public static void main(String[] args) {
