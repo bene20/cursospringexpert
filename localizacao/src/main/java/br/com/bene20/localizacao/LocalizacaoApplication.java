@@ -1,6 +1,5 @@
 package br.com.bene20.localizacao;
 
-import br.com.bene20.localizacao.domain.entity.Cidade;
 import br.com.bene20.localizacao.service.CidadeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -17,7 +16,9 @@ public class LocalizacaoApplication implements CommandLineRunner {
   public void run(String... args) throws Exception {
     System.out.println("Inicializado!");
     cidadeService
-            .filtroDinamico(new Cidade(6L, "orto", null))
+//            .filtroDinamico(new Cidade(6L, "orto", null))
+//            .listarCidadesByNomeSpec("São Paulo")
+            .listarCidadesByPropertyEqualSpec("nome", "São Paulo")
             .forEach(System.out::println);
   }
   
