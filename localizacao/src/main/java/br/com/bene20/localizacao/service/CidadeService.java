@@ -2,8 +2,11 @@ package br.com.bene20.localizacao.service;
 
 import br.com.bene20.localizacao.domain.entity.Cidade;
 import br.com.bene20.localizacao.domain.repository.CidadeRepository;
+import br.com.bene20.localizacao.domain.repository.projection.CidadeProjection;
 import br.com.bene20.localizacao.domain.repository.specs.CidadeSpecs;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -60,6 +63,19 @@ public class CidadeService {
     return cidadeRepository.findAll(
             CidadeSpecs.nomeiLike(nome)
     );
+  }
+  
+  public List<Cidade> listarCidadesByNomeNativo(String nome){
+    return cidadeRepository.findByNomeNativo(nome);
+  }
+  
+  public List<CidadeProjection> listarCidadesByNomeNativoProjection(String nome){
+    return cidadeRepository
+            .findByNomeNativoProjection(nome);
+//    return cidadeRepository
+//            .findByNomeNativoProjection(nome)
+//            .stream().map(c -> new Cidade(c.getIdCidade(), c.getNomeCidade(), null))
+//            .collect(Collectors.toList());
   }
   
   public List<Cidade> listarCidadesFiltroDinamicoSpec(Cidade filtro){

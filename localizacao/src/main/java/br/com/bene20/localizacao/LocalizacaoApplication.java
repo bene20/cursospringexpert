@@ -17,12 +17,15 @@ public class LocalizacaoApplication implements CommandLineRunner {
   public void run(String... args) throws Exception {
     System.out.println("Inicializado!");
     cidadeService
+            .listarCidadesByNomeNativoProjection("%Rio%")
+            .forEach(cp -> System.out.println("Cidade id '"+cp.getIdCidade()+"' de nome '"+cp.getNomeCidade()+"'"));
+//    cidadeService
 //            .filtroDinamico(new Cidade(6L, "orto", null))
 //            .listarCidadesByNomeSpec("São Paulo")
 //            .listarCidadesByNomeiLike("são paulo")
-            .listarCidadesFiltroDinamicoSpec(new Cidade(1L, "paulo", 100L))
-//            .listarCidades()
-            .forEach(System.out::println);
+//            .listarCidadesFiltroDinamicoSpec(new Cidade(1L, "paulo", 100L))
+//            .listarCidadesByNomeNativo("%Paulo%")
+//            .forEach(System.out::println);
   }
   
   public static void main(String[] args) {
