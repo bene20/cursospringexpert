@@ -10,6 +10,7 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 @Service
 @RequiredArgsConstructor
@@ -17,8 +18,8 @@ public class CidadeService {
   
   private final CidadeRepository cidadeRepository;
 
-  public void listarCidades(){
-    cidadeRepository.findAll().forEach(System.out::println);
+  public List<Cidade> listarCidades(){
+    return cidadeRepository.findAll();
   }
   
   public void listarCidadesPorNome(){
@@ -50,14 +51,33 @@ public class CidadeService {
   
   public List<Cidade> listarCidadesByNomeSpec(String nome){
     return cidadeRepository.findAll(
-            CidadeSpecs.nomeEquals(nome)
-                  .and(CidadeSpecs.habitantesGreaterThan(100))
+            CidadeSpecs.nomeEqual(nome)
+                  .and(CidadeSpecs.habitantesGreaterThan(100L))
     );
   }
   
-  public List<Cidade> listarCidadesByPropertyEqualSpec(String prop, String value){
+  public List<Cidade> listarCidadesByNomeiLike(String nome){
     return cidadeRepository.findAll(
-            CidadeSpecs.propertyEquals(prop, value)
+            CidadeSpecs.nomeiLike(nome)
     );
+  }
+  
+  public List<Cidade> listarCidadesFiltroDinamicoSpec(Cidade filtro){
+    //Obtendo um spec do tipo 'select * from cidade where 1=1'
+    Specification<Cidade> specs = Specification.where((root, query, cb) -> cb.conjunction());
+    
+    if(filtro.getId() != null){
+      specs = specs.and(CidadeSpecs.IdEqual(filtro.getId()));
+    }
+    
+    if(StringUtils.hasText(filtro.getNome())){
+      specs = specs.and(CidadeSpecs.nomeiLike(filtro.getNome()));
+    }
+    
+    if(filtro.getHabitantes() != null){
+      specs = specs.and(CidadeSpecs.habitantesGreaterThan(filtro.getHabitantes()));
+    }
+    
+    return cidadeRepository.findAll(specs);
   }
 }
